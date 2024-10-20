@@ -1,16 +1,22 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { ChevronsLeft, MenuIcon } from "lucide-react";
+import { ChevronsLeft, MenuIcon, PlusCircle, Search, Settings } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { ElementRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { UserItem } from "./user-item";
+import { useMutation} from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { Item } from "./item";
+import { toast } from "sonner";
+import { DocumentList } from "./document-list";
 
 
 export const Navigation = () => {
     const pathname = usePathname();
     const isMobile = useMediaQuery("(max-width: 768px)");
+    const create = useMutation(api.documents.create);
 
     const isResizinRef = useRef(false);
     const sidebarRef = useRef<ElementRef<"aside">>(null);
@@ -95,6 +101,15 @@ export const Navigation = () => {
         }
     }
 
+    const handleCreate = () => {
+        const promise = create({ title: "Untitled"});
+
+        toast.promise(promise, {
+            loading: "Создание нового документа...",
+            success: "Новый документ создан",
+            error: "Ошибка создания ннового документа"
+        })
+    }
 
     return (
         <>
@@ -119,9 +134,24 @@ export const Navigation = () => {
                 </div>
                 <div>
                     <UserItem />
+                    <Item 
+                    label="Поиск"
+                    icon={Search}
+                    isSearch
+                    onClick={() => {}}
+                    />
+                    <Item 
+                    label="Настройки"
+                    icon={Settings}
+                    onClick={() => {}}
+                    />
+                    <Item 
+                    onClick={handleCreate} 
+                    label="Создать документ" 
+                    icon={PlusCircle}/>
                 </div>
                 <div className="mt-4">
-                    <p>Документы</p>
+                   <DocumentList />
                 </div>
                 <div
                     onMouseDown={handleMouseDown}
