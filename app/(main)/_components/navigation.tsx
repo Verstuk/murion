@@ -1,16 +1,18 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { ChevronsLeft, MenuIcon, PlusCircle, Search, Settings } from "lucide-react";
+import { ChevronsLeft, MenuIcon, Plus, PlusCircle, Search, Settings, Trash, Trash2 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { ElementRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { UserItem } from "./user-item";
-import { useMutation} from "convex/react";
+import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Item } from "./item";
 import { toast } from "sonner";
 import { DocumentList } from "./document-list";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import TrashBox from "./trash-box";
 
 
 export const Navigation = () => {
@@ -25,7 +27,7 @@ export const Navigation = () => {
     const [isCollapsed, setIsCollapsed] = useState(isMobile);
 
     useEffect(() => {
-        if(isMobile) {
+        if (isMobile) {
             collapse();
         } else {
             resetWidth();
@@ -33,7 +35,7 @@ export const Navigation = () => {
     }, [isMobile]);
 
     useEffect(() => {
-        if(isMobile) {
+        if (isMobile) {
             collapse();
         }
     }, [pathname, isMobile])
@@ -70,7 +72,7 @@ export const Navigation = () => {
     };
 
     const resetWidth = () => {
-        if(sidebarRef.current && navbarRef.current) {
+        if (sidebarRef.current && navbarRef.current) {
             setIsCollapsed(false);
             setIsResetting(true);
 
@@ -102,7 +104,7 @@ export const Navigation = () => {
     }
 
     const handleCreate = () => {
-        const promise = create({ title: "Untitled"});
+        const promise = create({ title: "Untitled" });
 
         toast.promise(promise, {
             loading: "Создание нового документа...",
@@ -123,7 +125,7 @@ export const Navigation = () => {
                 )}
             >
                 <div
-                onClick={collapse}
+                    onClick={collapse}
                     role="button"
                     className={cn(
                         "h-6 w-6 text-muted-foreground rounded-md hover:bg-neutral-300 dark:hover:bg-neutral-600 absolute top-3 right-2 opacity-0 group-hover/sidebar:opacity-100 transition",
@@ -134,24 +136,39 @@ export const Navigation = () => {
                 </div>
                 <div>
                     <UserItem />
-                    <Item 
-                    label="Поиск"
-                    icon={Search}
-                    isSearch
-                    onClick={() => {}}
+                    <Item
+                        label="Поиск"
+                        icon={Search}
+                        isSearch
+                        onClick={() => { }}
                     />
-                    <Item 
-                    label="Настройки"
-                    icon={Settings}
-                    onClick={() => {}}
+                    <Item
+                        label="Настройки"
+                        icon={Settings}
+                        onClick={() => { }}
                     />
-                    <Item 
-                    onClick={handleCreate} 
-                    label="Создать документ" 
-                    icon={PlusCircle}/>
+                    <Item
+                        onClick={handleCreate}
+                        label="Создать документ"
+                        icon={PlusCircle} />
                 </div>
                 <div className="mt-4">
-                   <DocumentList />
+                    <DocumentList />
+                    <Item
+                        onClick={handleCreate}
+                        icon={Plus}
+                        label="Добавить документ"
+                    />
+                    <Popover>
+                        <PopoverTrigger className="w-full mt-4">
+                            <Item label="Корзина" icon={Trash2} />
+                        </PopoverTrigger>
+                        <PopoverContent
+                        className="p-0 w-72"
+                        side={isMobile ? "bottom" : "right"}>
+                            <TrashBox />
+                        </PopoverContent>
+                    </Popover>
                 </div>
                 <div
                     onMouseDown={handleMouseDown}
