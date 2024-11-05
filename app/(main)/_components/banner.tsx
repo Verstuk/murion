@@ -4,7 +4,6 @@ import { ConfirmModal } from "@/components/modals/confirm-modal";
 import { Button } from "@/components/ui/button";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
-import { restore } from "@/convex/documents";
 import { useMutation } from "convex/react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -45,9 +44,7 @@ export const Banner = ({
 
     return (
         <div className="w-full bg-rose-500 text-center text-sm p-2 text-white flex items-center gap-x-2 justify-center">
-            <p>
-                "Этот документ в корзине"
-            </p>
+            <p>Этот документ в корзине</p>
             <Button
             size="sm"
             onClick={onRestore}

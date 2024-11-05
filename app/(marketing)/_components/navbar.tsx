@@ -34,7 +34,7 @@ export const Navbar = () => {
                     </SignInButton>
                     <SignInButton mode="modal">
                         <Button size="sm">
-                            Получить Murion бесплатно
+                            Получить Папку бесплатно
                         </Button>
                     </SignInButton>
                     </>
@@ -43,7 +43,7 @@ export const Navbar = () => {
                     <>
                     <Button variant="ghost" size="sm" asChild>
                         <Link href="/documents">
-                            Войти в Murion
+                            Войти в Папку
                         </Link>
                     </Button>
                     <UserButton

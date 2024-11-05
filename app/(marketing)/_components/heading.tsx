@@ -15,10 +15,10 @@ const { isAuthenticated, isLoading } = useConvexAuth()
             <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold">
                     Ваши идеи, документы и планы в одном месте. 
                     Добро пожаловать в <span 
-                    className="underline"> Murion</span>
+                    className="underline"> Папку</span>
             </h1>
             <h3 className="text-base sm:text-xl md:text-2xl font-medium">
-        Murion - это подключенное рабочее пространство, <br />
+        Папка - это подключенное рабочее пространство, <br />
          где все происходит лучше и быстрее
         </h3>
         {isLoading && (
@@ -29,7 +29,7 @@ const { isAuthenticated, isLoading } = useConvexAuth()
         {isAuthenticated && !isLoading && (
           <Button className="font-bold" asChild>
             <Link href="/documents">
-            Войти в Murion
+            Войти в Папку
           <ArrowRight className="h-4 w-4 ml-2"/>
             </Link>
            </Button>
@@ -37,7 +37,7 @@ const { isAuthenticated, isLoading } = useConvexAuth()
         {!isAuthenticated && !isLoading && (
           <SignInButton mode="modal">
             <Button>
-              Получить Murion
+              Получить Папку
               <ArrowRight className="h-4 w-4 ml-2"/>
             </Button>
           </SignInButton>
